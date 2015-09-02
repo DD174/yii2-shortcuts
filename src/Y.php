@@ -4,6 +4,7 @@ namespace cornernote\shortcuts;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\helpers\VarDumper;
 
 /**
  * Class Y
@@ -172,6 +173,22 @@ class Y
         $request = Yii::$app->request;
         return ($absolute ? $request->getHostInfo() : '') . $request->getBaseUrl($absolute);
     }
+
+    /**
+	 * Shortcut with 'pre' tags for dump function of VarDumper class
+	 * @param mixed $var variable to be dumped
+	 * @param boolean $doEnd whether the application should be stopped after dumping
+	 */
+	public static function dump($var, $doEnd = true)
+	{
+		echo '<pre>';
+		VarDumper::dump($var, 10, true);
+		echo '</pre>';
+
+		if ($doEnd) {
+			Yii::$app->end();
+		}
+	}
 
 }
 
