@@ -190,6 +190,38 @@ class Y
 		}
 	}
 
+	/**
+	 * Returns the array variable value or $defaultValue if the array variable does not exist
+	 * @param string $key the array variable name (could be used dot delimiter for nested variable)
+	 * Example: variable name 'Media.Foto.thumbsize' will return value at $array['Media']['Foto']['thumbsize']
+	 * @param array $array an array containing variable to return
+	 * @param mixed $defaultValue the default value to be returned when the array variable does not exist
+	 * @return mixed
+	 */
+	public static function getValue($key, $array, $defaultValue = null)
+	{
+		if (strpos($key, '.') === false) {
+			return (isset($array[$key])) ? $array[$key] : $defaultValue;
+		}
+
+		$keys = explode('.', $key);
+		$firstKey = array_shift($keys);
+
+		if (!isset($array[$firstKey])) {
+			return $defaultValue;
+		}
+
+		$value = $array[$firstKey];
+
+		foreach ($keys as $k) {
+			if (!isset($value[$k]) && !array_key_exists($k, $value)) {
+				return $defaultValue;
+			}
+			$value = $value[$k];
+		}
+
+		return $value;
+	}
 }
 
 
