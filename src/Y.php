@@ -214,7 +214,7 @@ class Y
 		$value = $array[$firstKey];
 
 		foreach ($keys as $k) {
-			if (!isset($value[$k]) && !array_key_exists($k, $value)) {
+			if (!isset($value[$k]) || !array_key_exists($k, $value)) {
 				return $defaultValue;
 			}
 			$value = $value[$k];
